@@ -6,11 +6,6 @@ sumTillNextSpaceChar (x:xs) curr
   | curr == "" = "0":x:xs
   | otherwise = show ((read curr :: Int) + (read x :: Int)):xs
 
-keepBiggest :: Int -> String -> Int
-keepBiggest acc curr
-  | acc < (read curr :: Int) = read curr :: Int 
-  | otherwise = acc
-
 keepTopThree :: [Int] -> Int -> [Int]
 keepTopThree [] curr = [curr]
 keepTopThree [x] curr
@@ -30,10 +25,10 @@ day01 :: IO ()
 day01 = do
     content <- readFile "src/day01.input.txt"
     let contentLines = lines content
-    let rationsPerElf = foldl sumTillNextSpaceChar [] contentLines
-    let maxValue = foldl keepBiggest 0 rationsPerElf
-    print maxValue
-    let sumOfTopThreeElves = sum $ foldl keepTopThree [] $ map read rationsPerElf
+    let rationsPerElf = map read $ foldl sumTillNextSpaceChar [] contentLines
+    let maxRations = foldl max 0 rationsPerElf
+    print maxRations
+    let sumOfTopThreeElves = sum $ foldl keepTopThree [] rationsPerElf
     print sumOfTopThreeElves
 
     return ()
