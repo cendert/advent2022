@@ -1,4 +1,5 @@
 module Day02 where
+import Text.Printf
 
 data HandShape = Rock | Paper | Scissors deriving (Read, Show)
 data PlayResult = Win | Draw | Loss deriving (Show)
@@ -33,12 +34,35 @@ getPlayerScore Scissors Rock = getHandTypeScore Scissors + getPlayResultScore Lo
 getPlayerScore Scissors Paper = getHandTypeScore Scissors + getPlayResultScore Win
 getPlayerScore Scissors Scissors = getHandTypeScore Scissors + getPlayResultScore Draw
 
+processLineScore' :: String -> Int
+processLineScore' xs = getPlayerScore' (charToHandShape (head xs)) (charToPlayResult (last xs))
+
+charToPlayResult :: Char -> PlayResult
+charToPlayResult ch
+  | ch == 'X' = Loss
+  | ch == 'Y' = Draw
+  | ch == 'Z' = Win
+
+getPlayerScore' :: HandShape -> PlayResult -> Int
+getPlayerScore' Rock Win = getHandTypeScore Paper + getPlayResultScore Win
+getPlayerScore' Rock Draw = getHandTypeScore Rock + getPlayResultScore Draw
+getPlayerScore' Rock Loss = getHandTypeScore Scissors + getPlayResultScore Loss
+getPlayerScore' Paper Win = getHandTypeScore Scissors + getPlayResultScore Win
+getPlayerScore' Paper Draw = getHandTypeScore Paper + getPlayResultScore Draw
+getPlayerScore' Paper Loss = getHandTypeScore Rock + getPlayResultScore Loss
+getPlayerScore' Scissors Win = getHandTypeScore Rock + getPlayResultScore Win
+getPlayerScore' Scissors Draw = getHandTypeScore Scissors + getPlayResultScore Draw
+getPlayerScore' Scissors Loss = getHandTypeScore Paper + getPlayResultScore Loss
+
 day02 :: IO ()
 day02 = do
     content <- readFile "src/day02.input.txt"
     let contentLines = lines content
     let scoresList = map processLineScore contentLines
     let finalScore = sum scoresList
-    print finalScore
+    printf "Final score with wrong interpretation: %i\n" finalScore
+    let scoresList' = map processLineScore' contentLines
+    let finalScore' = sum scoresList'
+    printf "Final score with correct interpretation: %i\n" finalScore'
     
     return ()
