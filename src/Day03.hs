@@ -8,5 +8,4 @@ day03 = do
     
     print contentLines
     
-    putStrLn "String"
     return ()
