@@ -2,7 +2,8 @@ module Main where
 
 -- import qualified MyLib (someFunc)
 -- import qualified Day01 (day01)
-import qualified Day02 (day02)
+-- import qualified Day02 (day02)
+import qualified Day03 (day03)
 
 -- main :: IO ()
 -- main = do
@@ -11,4 +12,4 @@ import qualified Day02 (day02)
 
 main :: IO ()
 main = do
-  Day02.day02
+  Day03.day03
