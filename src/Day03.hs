@@ -42,6 +42,7 @@ day03 = do
     let perGroupOfThree = toThruple contentLines
     let commonValues = map findCommonValueInThruple perGroupOfThree
     let prioValuesOfGroupBadges = map (getCharIndex charIndexMapping) commonValues
+    let prioValuesOfGroupBadges = map (getCharIndex charIndexMapping) commonValues
     let prioTotalOfGroupBadges = sum prioValuesOfGroupBadges
     printf "The total prio based on the common values within three rucksacks is %i\n" prioTotalOfGroupBadges
     
